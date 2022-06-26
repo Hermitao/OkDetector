@@ -88,13 +88,11 @@ while True:
     letra = cv2.waitKey(1)
 
     if letra != -1:
-        
         counter += 1
-
-        print(nova_linha)
+        
         nova_linha = str(nova_linha)
         nova_linha = nova_linha.replace('[', '').replace(']', '')
-        nova_linha += ',' + chr(letra).upper()
+        nova_linha += ', ' + chr(letra).upper()
         print(chr(letra).upper())
         
         with open('./baseDeDados/base.txt', 'a') as file:
