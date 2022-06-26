@@ -95,7 +95,7 @@ while True:
         nova_linha = str(nova_linha)
         nova_linha = nova_linha.replace('[', '').replace(']', '')
         nova_linha += ',' + chr(letra).upper()
-        print(chr(letra))
+        print(chr(letra).upper())
         
         with open('./baseDeDados/base.txt', 'a') as file:
             file.write('\n')
