@@ -1,9 +1,8 @@
+from asyncio.windows_events import NULL
 import numpy as np
 import cv2
 import mediapipe as mp
 import time
-import tensorflow as tf
-import pandas as pd
 import warnings as CALA_BOCA
 CALA_BOCA.filterwarnings('ignore')
 
@@ -13,15 +12,9 @@ mp_hands = mp.solutions.hands
 hands = mp_hands.Hands()
 mp_draw = mp.solutions.drawing_utils
 
+counter = 0
 p_time = 0
 c_time = 0
-
-base_de_dados = pd.DataFrame()
-for x in range(21):
-    base_de_dados[str(x) + '_x'] = pd.Series([])
-    base_de_dados[str(x) + '_y'] = pd.Series([])
-        
-base_de_dados['Classe'] = ''
 
 while True:
     success, img = cap.read()
@@ -67,8 +60,8 @@ while True:
                 positionx_relative_normalized = positionx_relative / ref_origin_distance
                 positiony_relative_normalized = positiony_relative / ref_origin_distance
 
-                nova_linha[id] = positionx_relative_normalized
-                nova_linha[id + 1] = positiony_relative_normalized
+                nova_linha[2*id] = positionx_relative_normalized
+                nova_linha[2*id+1] = positiony_relative_normalized
 
                 my_position = np.array([lm.x, lm.y])
                 distance = np.linalg.norm(my_position - origin_position)
@@ -87,11 +80,28 @@ while True:
     p_time = c_time
 
     cv2.putText(img, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 255), 3)
+    cv2.putText(img, f"{counter}", (10, 350), cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 255), 3)
 
     cv2.imshow("Image", img)
-    if cv2.waitKey(1) == ord('a'):
-        base_de_dados = base_de_dados.append(nova_linha)
-        print ("aaaaaaaaaaaaaaaaaaaaaaaaa")
+
+    letra = None
+    letra = cv2.waitKey(1)
+    print(letra)
+
+
+    if letra != -1:
+        
+        counter += 1
+
+        print(nova_linha)
+        nova_linha = str(nova_linha)
+        nova_linha = nova_linha.replace('[', '').replace(']', '')
+        nova_linha += ', A'
+
+        with open('C:/Users/joaop/OneDrive/Documents/garotoDePrograma/Python/py/OkDetector-libras/baseDeDados/base.txt', 'a') as file:
+            file.write('\n')
+            for x in nova_linha:
+                file.write(x)
+
     if cv2.waitKey(1) == ord('e'):
-        base_de_dados.to_excel(r'C:\Users\Aluno\Desktop\OkDetector-libras\baseDeDados.xlsx', index=False)
         break
