@@ -84,8 +84,10 @@ while True:
 
     cv2.imshow("Image", img)
 
-    letra = None
     letra = cv2.waitKey(1)
+    
+    if letra == 27: #ESC
+        break
 
     if letra != -1:
         counter += 1
@@ -93,12 +95,10 @@ while True:
         nova_linha = str(nova_linha)
         nova_linha = nova_linha.replace('[', '').replace(']', '')
         nova_linha += ', ' + chr(letra).upper()
-        print(chr(letra).upper())
-        
+        print('LETRA:' + chr(letra).upper())
+        print('ASCII:' + str(letra))
+    
         with open('./baseDeDados/base.txt', 'a') as file:
             file.write('\n')
             for x in nova_linha:
                 file.write(x)
-
-    if cv2.waitKey(1) == ord('e'):
-        break
