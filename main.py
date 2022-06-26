@@ -86,8 +86,6 @@ while True:
 
     letra = None
     letra = cv2.waitKey(1)
-    print(letra)
-
 
     if letra != -1:
         
@@ -96,9 +94,10 @@ while True:
         print(nova_linha)
         nova_linha = str(nova_linha)
         nova_linha = nova_linha.replace('[', '').replace(']', '')
-        nova_linha += ', A'
-
-        with open('C:/Users/joaop/OneDrive/Documents/garotoDePrograma/Python/py/OkDetector-libras/baseDeDados/base.txt', 'a') as file:
+        nova_linha += ',' + chr(letra).upper()
+        print(chr(letra))
+        
+        with open('./baseDeDados/base.txt', 'a') as file:
             file.write('\n')
             for x in nova_linha:
                 file.write(x)
