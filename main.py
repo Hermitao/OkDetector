@@ -79,8 +79,8 @@ while True:
     fps = 1/(c_time - p_time)
     p_time = c_time
 
-    cv2.putText(img, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 255), 3)
-    cv2.putText(img, f"{counter}", (10, 350), cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 255), 3)
+    cv2.putText(img, f"FPS: {str(int(fps))}", (540,  30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0  , 255, 255), 2)
+    cv2.putText(img, f"Registros: {counter}", (5  , 465), cv2.FONT_HERSHEY_DUPLEX,    1, (255, 255, 255), 1)
 
     cv2.imshow("Image", img)
 
